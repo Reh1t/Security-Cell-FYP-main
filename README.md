@@ -30,7 +30,7 @@ This repository contains both the backend and frontend for the SecurityCell proj
    ```
 3. Install the required dependencies:
    ```sh
-   npm install
+   npm install --force
    ```
 4. Start the frontend development server:
    ```sh

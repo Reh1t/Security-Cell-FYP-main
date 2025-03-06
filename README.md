@@ -50,6 +50,3 @@ Now, the backend and frontend should be running successfully.
 - You may need to configure Selenium with the appropriate WebDriver (e.g., ChromeDriver) based on your browser version.
 
 Happy coding! 🚀
-```  
-
-This file provides clear instructions for setting up and running both the backend and frontend. Let me know if you want any modifications! 🚀

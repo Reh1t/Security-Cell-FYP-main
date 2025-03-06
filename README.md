@@ -42,7 +42,7 @@ Now, the backend and frontend should be running successfully.
 ## Technologies Used
 
 - **Backend**: Flask, Flask-CORS, Flask-SocketIO, Selenium
-- **Frontend**: React.js (or any other framework used)
+- **Frontend**: React.js, Next.js, Tailwind
 
 ## Notes
 

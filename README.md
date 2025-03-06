@@ -48,5 +48,3 @@ Now, the backend and frontend should be running successfully.
 
 - Ensure you have **Python** and **Node.js** installed before running the above commands.
 - You may need to configure Selenium with the appropriate WebDriver (e.g., ChromeDriver) based on your browser version.
-
-Happy coding! 🚀

@@ -175,6 +175,34 @@ export default function Home() {
     console.log("Test vulnerable components About to start");
     await testVulnerableComponents();
     console.log("Test vulnerable components Ended");
+    console.log("Test Crypto Failures About to start");
+    await testcryptofailures();
+    console.log("Test Crypto Failures Ended");
+    console.log("Test Auth Failures About to start");
+    await testauthfailures();
+    console.log("Test Auth Failures Ended");
+    console.log("Test Software Data Integrity About to start");
+    await testSoftwareDataIntegrity();
+    console.log("Test Software Data Integrity Ended");
+    console.log("Test Software Logging About to start");
+    await testSoftwarelogging();
+    console.log("Test Software Logging Ended");
+    console.log("Test CSP About to start");
+    await testCspChecker();
+    console.log("Test CSP Ended");
+    console.log("Test Cookie Security About to start");
+    await testCookieSecurity();
+    console.log("Test Cookie Security Ended");
+    console.log("Test Form Security About to start");
+    await testFormSecurity();
+    console.log("Test Form Security Ended");
+    console.log("Third Party Script Monitor About to start");
+    await testthirdpartyscripts();
+    console.log("Third Party Script Monitor Ended");
+    console.log("Https Mixed Content Scanner About to start");
+    await testhttpsmixed();
+    console.log("Https Mixed Content Scanner Ended");
+
   };
 
   const links = [
@@ -238,6 +266,33 @@ export default function Home() {
     },
     {
       text: "Vulnerable Components",
+    },
+    {
+      text: "Crypto Failures",
+    },
+    {
+      text: "Authentication Failures",
+    },
+    {
+      text: "Software Data Integrity",
+    },
+    {
+      text: "Software Logging",
+    },
+    {
+      text: "CSP Checker",
+    },
+    {
+      text: "Cookie Security",
+    },
+    {
+      text: "Form Security",
+    },
+    {
+      text: "Third Party Script Monitor",
+    },
+    {
+      text: "Https Mixed Content Scanner",
     },
     // {
     //   text: "LFI Attack",
@@ -314,6 +369,15 @@ export default function Home() {
     const socket5007 = io("http://localhost:5007");
     const socket5008 = io("http://localhost:5008");
     const socket5009 = io("http://localhost:5009");
+    const socket5010 = io("http://localhost:5010");
+    const socket5011 = io("http://localhost:5011");
+    const socket5012 = io("http://localhost:5012");
+    const socket5013 = io("http://localhost:5013");
+    const socket5014 = io("http://localhost:5014");
+    const socket5015 = io("http://localhost:5015");
+    const socket5016 = io("http://localhost:5016");
+    const socket5017 = io("http://localhost:5017");
+    const socket5018 = io("http://localhost:5018");
 
     // Listen for updates on port 5000
     socket5000.on("update", (data) => {
@@ -405,6 +469,87 @@ export default function Home() {
       console.log(`Port 5009: ${data.message}`); // Log to console
     });
 
+    // Listen for updates on port 5010
+    socket5010.on("update", (data) => {
+      setUpdates((prevUpdates) => [
+        ...prevUpdates,
+        `Crypto Failures: ${data.message}`, // Prefix to indicate source
+      ]);
+      console.log(`Port 5010: ${data.message}`); // Log to console
+    });
+
+    // Listen for updates on port 5011
+    socket5011.on("update", (data) => {
+      setUpdates((prevUpdates) => [
+        ...prevUpdates,
+        `Auth Failures: ${data.message}`, // Prefix to indicate source
+      ]);
+      console.log(`Port 5011: ${data.message}`); // Log to console
+    });
+
+    // Listen for updates on port 5012
+    socket5012.on("update", (data) => {
+      setUpdates((prevUpdates) => [
+        ...prevUpdates,
+        `Software data integrity: ${data.message}`, // Prefix to indicate source
+      ]);
+      console.log(`Port 5012: ${data.message}`); // Log to console
+    });
+
+    // Listen for updates on port 5013
+    socket5013.on("update", (data) => {
+      setUpdates((prevUpdates) => [
+        ...prevUpdates,
+        `Software Logging: ${data.message}`, // Prefix to indicate source
+      ]);
+      console.log(`Port 5013: ${data.message}`); // Log to console
+    });
+
+    // Listen for updates on port 5014
+    socket5014.on("update", (data) => {
+      setUpdates((prevUpdates) => [
+        ...prevUpdates,
+        `CSP Checker: ${data.message}`, // Prefix to indicate source
+      ]);
+      console.log(`Port 5014: ${data.message}`); // Log to console
+    });
+
+    // Listen for updates on port 5015
+    socket5015.on("update", (data) => {
+      setUpdates((prevUpdates) => [
+        ...prevUpdates,
+        `Cookie Security: ${data.message}`, // Prefix to indicate source
+      ]);
+      console.log(`Port 5015: ${data.message}`); // Log to console
+    });
+
+    // Listen for updates on port 5016
+    socket5016.on("update", (data) => {
+      setUpdates((prevUpdates) => [
+        ...prevUpdates,
+        `Cookie Security: ${data.message}`, // Prefix to indicate source
+      ]);
+      console.log(`Port 5016: ${data.message}`); // Log to console
+    });
+
+    // Listen for updates on port 5017
+    socket5017.on("update", (data) => {
+      setUpdates((prevUpdates) => [
+        ...prevUpdates,
+        `Third Party Scripts: ${data.message}`, // Prefix to indicate source
+      ]);
+      console.log(`Port 5017: ${data.message}`); // Log to console
+    });
+
+    // Listen for updates on port 5018
+    socket5018.on("update", (data) => {
+      setUpdates((prevUpdates) => [
+        ...prevUpdates,
+        `Https Mixed Content Scanner: ${data.message}`, // Prefix to indicate source
+      ]);
+      console.log(`Port 5018: ${data.message}`); // Log to console
+    });
+
     // Cleanup: Disconnect sockets when component unmounts
     return () => {
       socket5000.disconnect();
@@ -417,6 +562,16 @@ export default function Home() {
       socket5007.disconnect();
       socket5008.disconnect();
       socket5009.disconnect();
+      socket5010.disconnect();
+      socket5011.disconnect();
+      socket5012.disconnect();
+      socket5013.disconnect();
+      socket5014.disconnect();
+      socket5015.disconnect();
+      socket5016.disconnect();
+      socket5017.disconnect();
+      socket5018.disconnect();
+
     };
   }, []);
 
@@ -673,6 +828,195 @@ export default function Home() {
     try {
       const response = await axios.post(
         "http://localhost:5009/api/test-vulnerable-components",
+        { url },
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
+
+      setResult(response.data.message);
+      setDetectedPayloads(response.data.detected_payloads || []);
+    } catch (error) {
+      console.error("Error testing Vulnerable Components:", error);
+      setResult("An error occurred.");
+    }
+  };
+
+  const testcryptofailures = async () => {
+    setCurrentStep(10);
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5010/api/test-crypto-failures",
+        { url },
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
+
+      setResult(response.data.message);
+      setDetectedPayloads(response.data.detected_payloads || []);
+    } catch (error) {
+      console.error("Error testing Vulnerable Components:", error);
+      setResult("An error occurred.");
+    }
+  };
+
+  const testauthfailures = async () => {
+    setCurrentStep(11);
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5011/api/test-auth-failures",
+        { url },
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
+
+      setResult(response.data.message);
+      setDetectedPayloads(response.data.detected_payloads || []);
+    } catch (error) {
+      console.error("Error testing Vulnerable Components:", error);
+      setResult("An error occurred.");
+    }
+  };
+
+  const testSoftwareDataIntegrity = async () => {
+    setCurrentStep(12);
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5012/api/test-software-data-integrity",
+        { url },
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
+
+      setResult(response.data.message);
+      setDetectedPayloads(response.data.detected_payloads || []);
+    } catch (error) {
+      console.error("Error testing Vulnerable Components:", error);
+      setResult("An error occurred.");
+    }
+  };
+
+  const testSoftwarelogging = async () => {
+    setCurrentStep(13);
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5013/api/test-software-logging",
+        { url },
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
+
+      setResult(response.data.message);
+      setDetectedPayloads(response.data.detected_payloads || []);
+    } catch (error) {
+      console.error("Error testing Vulnerable Components:", error);
+      setResult("An error occurred.");
+    }
+  };
+
+  const testCspChecker = async () => {
+    setCurrentStep(14);
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5014/api/test-csp",
+        { url },
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
+
+      setResult(response.data.message);
+      setDetectedPayloads(response.data.detected_payloads || []);
+    } catch (error) {
+      console.error("Error testing Vulnerable Components:", error);
+      setResult("An error occurred.");
+    }
+  };
+
+  const testCookieSecurity = async () => {
+    setCurrentStep(15);
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5015/api/test-cookie-security",
+        { url },
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
+
+      setResult(response.data.message);
+      setDetectedPayloads(response.data.detected_payloads || []);
+    } catch (error) {
+      console.error("Error testing Vulnerable Components:", error);
+      setResult("An error occurred.");
+    }
+  };
+
+  const testFormSecurity = async () => {
+    setCurrentStep(16);
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5016/api/test-form-security",
+        { url },
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
+
+      setResult(response.data.message);
+      setDetectedPayloads(response.data.detected_payloads || []);
+    } catch (error) {
+      console.error("Error testing Vulnerable Components:", error);
+      setResult("An error occurred.");
+    }
+  };
+
+  const testthirdpartyscripts = async () => {
+    setCurrentStep(17);
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5017/api/test-third-party-scripts",
+        { url },
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
+
+      setResult(response.data.message);
+      setDetectedPayloads(response.data.detected_payloads || []);
+    } catch (error) {
+      console.error("Error testing Vulnerable Components:", error);
+      setResult("An error occurred.");
+    }
+  };
+
+  const testhttpsmixed = async () => {
+    setCurrentStep(18);
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5018/api/test-https-mixed",
         { url },
         {
           headers: { "Content-Type": "application/json" },
@@ -1213,7 +1557,7 @@ export default function Home() {
 
         {/* web socket to be implemented */}
 
-        <section>
+        {/* <section>
           <div className="">
             <div className="mx-auto px-6 max-w-6xl text-gray-500">
               <div className="text-center">
@@ -1868,20 +2212,20 @@ export default function Home() {
               </div>
             </div>
           </div>
-        </section>
+        </section> */}
 
-        <div className="m-40 flex justify-center text-center">
+        {/* <div className="m-40 flex justify-center text-center">
           <HoverBorderGradient
             containerClassName="rounded-full"
             as="button"
             className="dark:bg-black bg-white rounded-full text-black dark:text-white flex items-center space-x-2"
           >
-            {/* <input className="bg-transparent" /> */}
+            <input className="bg-transparent" />
             <span>Aceternity UI</span>
           </HoverBorderGradient>
-        </div>
+        </div> */}
 
-        <CardContainer className="inter-var">
+        {/* <CardContainer className="inter-var">
           <CardBody className="bg-gray-50 relative group/card  dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-auto sm:w-[30rem] h-auto rounded-xl p-6 border  ">
             <CardItem
               translateZ="50"
@@ -1924,7 +2268,7 @@ export default function Home() {
               </CardItem>
             </div>
           </CardBody>
-        </CardContainer>
+        </CardContainer> */}
       </div>
       <div className="block z-100">
         <Footer />

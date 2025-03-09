@@ -33,7 +33,10 @@ def run_ssrf_app():
     os.system("python ssrf.py")  # SSRF Flask app script
 
 def run_security_app():
-    os.system("python securityMisConfig.py")  # CORS Flask app script
+    os.system("python securityMisConfig.py")  # securityMisConfig Flask app script
+
+def run_vulnerable_components_app():
+    os.system("python vulnerablecomponents.py")  # Vulnerable Components Flask app script
 
 if __name__ == "__main__":
     # Create processes for each Flask app
@@ -46,6 +49,7 @@ if __name__ == "__main__":
     ssl_process = Process(target=run_ssl_app)
     ssrf_process = Process(target=run_ssrf_app)
     security_process = Process(target=run_security_app)
+    vulnerable_components_process = Process(target=run_vulnerable_components_app)
 
 
     # Start all processes
@@ -58,6 +62,7 @@ if __name__ == "__main__":
     ssl_process.start()
     ssrf_process.start()
     security_process.start()
+    vulnerable_components_process.start()
 
     print("All eight Flask apps are running...")
 
@@ -71,5 +76,6 @@ if __name__ == "__main__":
     ssl_process.join()
     ssrf_process.join()
     security_process.join()
+    vulnerable_components_process.join()
 
     print("All eight Flask apps have finished running.")

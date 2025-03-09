@@ -154,25 +154,27 @@ export default function Home() {
   };
 
   const callTest = async () => {
-    // console.log("Test XSS About to start");
-    // await testXss();
-    // console.log("Test SQLI About to start");
-    // await testSQLI();
-    // console.log("Test CSRF About to start");
-    // await testCSRF();
-    // console.log("Test Brute Force About to start");
-    // await startBruteForce();
-    // console.log("Test Broken Access Control About to start");
-    // await brokenAccessControl();
-    // console.log("Test CORS About to start");
-    // await cors();
-    // console.log("Test SSL About to start");
-    // await testssl();
-    // console.log("Test SSRF About to start");
-    // await testssrf();
+    console.log("Test XSS About to start");
+    await testXss();
+    console.log("Test SQLI About to start");
+    await testSQLI();
+    console.log("Test CSRF About to start");
+    await testCSRF();
+    console.log("Test Brute Force About to start");
+    await startBruteForce();
+    console.log("Test Broken Access Control About to start");
+    await brokenAccessControl();
+    console.log("Test CORS About to start");
+    await cors();
+    console.log("Test SSL About to start");
+    await testssl();
+    console.log("Test SSRF About to start");
+    await testssrf();
     console.log("Test Security Misconfiguration About to start");
     await testSecurityMisconfiguration();
-    console.log("Test testSecurityMisconfiguration Ended");
+    console.log("Test vulnerable components About to start");
+    await testVulnerableComponents();
+    console.log("Test vulnerable components Ended");
   };
 
   const links = [
@@ -233,6 +235,9 @@ export default function Home() {
     },
     {
       text: "Security Misconfiguration",
+    },
+    {
+      text: "Vulnerable Components",
     },
     // {
     //   text: "LFI Attack",
@@ -308,6 +313,7 @@ export default function Home() {
     const socket5006 = io("http://localhost:5006");
     const socket5007 = io("http://localhost:5007");
     const socket5008 = io("http://localhost:5008");
+    const socket5009 = io("http://localhost:5009");
 
     // Listen for updates on port 5000
     socket5000.on("update", (data) => {
@@ -390,6 +396,15 @@ export default function Home() {
       console.log(`Port 5008: ${data.message}`); // Log to console
     });
 
+    // Listen for updates on port 5009
+    socket5009.on("update", (data) => {
+      setUpdates((prevUpdates) => [
+        ...prevUpdates,
+        `Vulnerable Components: ${data.message}`, // Prefix to indicate source
+      ]);
+      console.log(`Port 5009: ${data.message}`); // Log to console
+    });
+
     // Cleanup: Disconnect sockets when component unmounts
     return () => {
       socket5000.disconnect();
@@ -401,6 +416,7 @@ export default function Home() {
       socket5006.disconnect();
       socket5007.disconnect();
       socket5008.disconnect();
+      socket5009.disconnect();
     };
   }, []);
 
@@ -647,6 +663,27 @@ export default function Home() {
       setDetectedPayloads(response.data.detected_payloads || []);
     } catch (error) {
       console.error("Error testing Security Misconfiguration:", error);
+      setResult("An error occurred.");
+    }
+  };
+
+  const testVulnerableComponents = async () => {
+    setCurrentStep(9);
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5009/api/test-vulnerable-components",
+        { url },
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
+
+      setResult(response.data.message);
+      setDetectedPayloads(response.data.detected_payloads || []);
+    } catch (error) {
+      console.error("Error testing Vulnerable Components:", error);
       setResult("An error occurred.");
     }
   };

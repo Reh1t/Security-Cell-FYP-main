@@ -1,0 +1,64 @@
+[
+    {
+        "url": "https://www.williamsplumbingsolution.com/",
+        "results": {
+            "missing_headers": [
+                "X-Frame-Options",
+                "Content-Security-Policy",
+                "X-Content-Type-Options",
+                "Referrer-Policy",
+                "Permissions-Policy",
+                "Access-Control-Allow-Methods",
+                "Access-Control-Allow-Headers",
+                "Expect-CT",
+                "Pragma",
+                "X-Permitted-Cross-Domain-Policies",
+                "X-DNS-Prefetch-Control"
+            ],
+            "exposed_files": []
+        }
+    },
+    {
+        "url": "https://rehantariq.me/",
+        "results": {
+            "missing_headers": [
+                "X-Frame-Options",
+                "Content-Security-Policy",
+                "X-Content-Type-Options",
+                "Referrer-Policy",
+                "Permissions-Policy",
+                "Access-Control-Allow-Methods",
+                "Access-Control-Allow-Headers",
+                "Expect-CT",
+                "Pragma",
+                "X-Permitted-Cross-Domain-Policies",
+                "X-DNS-Prefetch-Control"
+            ],
+            "exposed_files": []
+        }
+    },
+    {
+        "url": "https://ooplab.org/",
+        "results": {
+            "missing_headers": [
+                "X-Frame-Options",
+                "Strict-Transport-Security",
+                "X-Content-Type-Options",
+                "Referrer-Policy",
+                "Permissions-Policy",
+                "Access-Control-Allow-Origin",
+                "Access-Control-Allow-Methods",
+                "Access-Control-Allow-Headers",
+                "Expect-CT",
+                "Cache-Control",
+                "Pragma",
+                "X-Permitted-Cross-Domain-Policies",
+                "X-DNS-Prefetch-Control"
+            ],
+            "exposed_files": [
+                "https://ooplab.org/sitemap.xml",
+                "https://ooplab.org/robots.txt"
+            ]
+        }
+    }
+]

@@ -29,6 +29,12 @@ def run_cors_app():
 def run_ssl_app():
     os.system("python test_ssl.py")  # SSL Flask app script
 
+def run_ssrf_app():
+    os.system("python ssrf.py")  # SSRF Flask app script
+
+def run_security_app():
+    os.system("python securityMisConfig.py")  # CORS Flask app script
+
 if __name__ == "__main__":
     # Create processes for each Flask app
     xss_process = Process(target=run_xss_app)
@@ -38,6 +44,9 @@ if __name__ == "__main__":
     bac_process = Process(target=run_bac_app)
     cors_process = Process(target=run_cors_app)
     ssl_process = Process(target=run_ssl_app)
+    ssrf_process = Process(target=run_ssrf_app)
+    security_process = Process(target=run_security_app)
+
 
     # Start all processes
     xss_process.start()
@@ -47,8 +56,10 @@ if __name__ == "__main__":
     bac_process.start()
     cors_process.start()
     ssl_process.start()
+    ssrf_process.start()
+    security_process.start()
 
-    print("All seven Flask apps are running...")
+    print("All eight Flask apps are running...")
 
     # Wait for the processes to finish
     xss_process.join()
@@ -58,3 +69,7 @@ if __name__ == "__main__":
     bac_process.join()
     cors_process.join()
     ssl_process.join()
+    ssrf_process.join()
+    security_process.join()
+
+    print("All eight Flask apps have finished running.")

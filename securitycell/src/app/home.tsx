@@ -46,6 +46,7 @@ import GlobeDemo from "@/components/GlobeComponent";
 import CardRotation from "@/components/CardRotation";
 import { truncate } from "fs/promises";
 import test from "node:test";
+import { text } from "stream/consumers";
 
 export default function Home() {
   const websitePrefix = "www.securitycell.themavennest.shop";
@@ -62,7 +63,7 @@ export default function Home() {
   const [message, setMessage] = useState("Verify Now");
   const [url, setURL] = useState("");
 
-  const sendMail = async (e : React.FormEvent) => {
+  const sendMail = async (e: React.FormEvent) => {
     e.preventDefault();
 
     setLoading(true);
@@ -79,7 +80,7 @@ export default function Home() {
       // Assuming the response indicates success (you might want to check the response status)
       // Set loading to false after successfully sending email
       setLoading(false);
-    } catch (error : any) {
+    } catch (error: any) {
       console.error("Error sending email:", error.response.data);
       // Handle error if necessary
       // For example, setLoading(false) to stop loading indicator
@@ -135,23 +136,43 @@ export default function Home() {
 
       const data = await response.json();
 
+      setLoading1(true);
       if (response.ok && data.verified && data.status === 1) {
         allowVanishRef.current = true; // Set vanish behavior to true
         console.log("done");
-        setLoading1(true);
-        
-        testXss();
+
+        callTest();
       } else {
-        allowVanishRef.current = true; // Keep vanish behavior disabled
-        setLoading1(true);
+        allowVanishRef.current = false; // Keep vanish behavior disabled
         console.log("hello");
         //    window.location.href="/domain-verification";
-        startBruteForce();
-        // testXss();
+        callTest();
       }
     } catch (error) {
       console.error("Error verifying domain:", error);
     }
+  };
+
+  const callTest = async () => {
+    // console.log("Test XSS About to start");
+    // await testXss();
+    // console.log("Test SQLI About to start");
+    // await testSQLI();
+    // console.log("Test CSRF About to start");
+    // await testCSRF();
+    // console.log("Test Brute Force About to start");
+    // await startBruteForce();
+    // console.log("Test Broken Access Control About to start");
+    // await brokenAccessControl();
+    // console.log("Test CORS About to start");
+    // await cors();
+    // console.log("Test SSL About to start");
+    // await testssl();
+    // console.log("Test SSRF About to start");
+    // await testssrf();
+    console.log("Test Security Misconfiguration About to start");
+    await testSecurityMisconfiguration();
+    console.log("Test testSecurityMisconfiguration Ended");
   };
 
   const links = [
@@ -207,6 +228,18 @@ export default function Home() {
     {
       text: "SSL Certificates Availability",
     },
+    {
+      text: "SSRF Attack",
+    },
+    {
+      text: "Security Misconfiguration",
+    },
+    // {
+    //   text: "LFI Attack",
+    // },
+    // {
+    //   text: "RCE Attack",
+    // },
   ];
 
   const [currentStep, setCurrentStep] = useState(0);
@@ -273,6 +306,8 @@ export default function Home() {
     const socket5004 = io("http://localhost:5004");
     const socket5005 = io("http://localhost:5005");
     const socket5006 = io("http://localhost:5006");
+    const socket5007 = io("http://localhost:5007");
+    const socket5008 = io("http://localhost:5008");
 
     // Listen for updates on port 5000
     socket5000.on("update", (data) => {
@@ -337,6 +372,24 @@ export default function Home() {
       console.log(`Port 5006: ${data.message}`); // Log to console
     });
 
+    // Listen for updates on port 5007
+    socket5007.on("update", (data) => {
+      setUpdates((prevUpdates) => [
+        ...prevUpdates,
+        `SSRF: ${data.message}`, // Prefix to indicate source
+      ]);
+      console.log(`Port 5007: ${data.message}`); // Log to console
+    });
+
+    // Listen for updates on port 5008
+    socket5008.on("update", (data) => {
+      setUpdates((prevUpdates) => [
+        ...prevUpdates,
+        `Security MisConfiguration: ${data.message}`, // Prefix to indicate source
+      ]);
+      console.log(`Port 5008: ${data.message}`); // Log to console
+    });
+
     // Cleanup: Disconnect sockets when component unmounts
     return () => {
       socket5000.disconnect();
@@ -346,6 +399,8 @@ export default function Home() {
       socket5004.disconnect();
       socket5005.disconnect();
       socket5006.disconnect();
+      socket5007.disconnect();
+      socket5008.disconnect();
     };
   }, []);
 
@@ -366,9 +421,6 @@ export default function Home() {
       const data = await response.json();
       setResult(data.message);
       setDetectedPayloads(data.detected_payloads || []);
-
-      // Call the new function here after the XSS test completes successfully
-      testSQLI();
     } catch (error) {
       console.error("Error testing XSS:", error);
       setResult("An error occurred.");
@@ -410,9 +462,6 @@ export default function Home() {
       const data = await response.json();
       setResult(data.message);
       setDetectedPayloads(data.detected_payloads || []);
-
-      console.log("Test testCSRF starting");
-      testCSRF();
     } catch (error) {
       console.error("Error testing XSS:", error);
       setResult("An error occurred.");
@@ -444,8 +493,6 @@ export default function Home() {
       setResult(
         `Forms analyzed: ${data.forms_analyzed}, CSRF vulnerabilities: ${data.csrf_vulnerabilities.length}`
       );
-
-      startBruteForce();
     } catch (error) {
       console.error("Error testing CSRF:", error);
       setResult("An error occurred.");
@@ -474,8 +521,6 @@ export default function Home() {
       const data = await response.json();
       setResult(data.message);
       setDetectedPayloads(data.detected_payloads || []);
-
-      brokenAccessControl();
     } catch (error) {
       console.error("Error testing CSRF:", error);
       setResult("An error occurred.");
@@ -504,8 +549,6 @@ export default function Home() {
       const data = await response.json();
       setResult(data.message);
       setDetectedPayloads(data.detected_payloads || []);
-
-      cors();
     } catch (error) {
       console.error("Error testing CSRF:", error);
       setResult("An error occurred.");
@@ -531,8 +574,6 @@ export default function Home() {
       const data = await response.json();
       setResult(data.message);
       setDetectedPayloads(data.detected_payloads || []);
-
-      testssl();
     } catch (error) {
       console.error("Error testing CSRF:", error);
       setResult("An error occurred.");
@@ -560,6 +601,52 @@ export default function Home() {
       setDetectedPayloads(data.detected_payloads || []);
     } catch (error) {
       console.error("Error testing CSRF:", error);
+      setResult("An error occurred.");
+    }
+  };
+
+  const testssrf = async () => {
+    setCurrentStep(7); // Update step in a multi-step process
+
+    try {
+      const response = await fetch("http://localhost:5007/api/test-ssrf", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ url }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP Error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      setResult(data.message);
+      setDetectedPayloads(data.detected_payloads || []);
+    } catch (error) {
+      console.error("Error testing CSRF:", error);
+      setResult("An error occurred.");
+    }
+  };
+
+  const testSecurityMisconfiguration = async () => {
+    setCurrentStep(8);
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5008/api/test-security-misconfig",
+        { url },
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
+
+      setResult(response.data.message);
+      setDetectedPayloads(response.data.detected_payloads || []);
+    } catch (error) {
+      console.error("Error testing Security Misconfiguration:", error);
       setResult("An error occurred.");
     }
   };
@@ -1096,7 +1183,7 @@ export default function Home() {
                 <h2 className="text-3xl text-gray-950 dark:text-white font-semibold">
                   Quickstart with boilerplates
                 </h2>
-                <p className ="mt-6 text-gray-700 dark:text-gray-300">
+                <p className="mt-6 text-gray-700 dark:text-gray-300">
                   Harum quae dolore inventore repudiandae? orrupti aut
                   temporibus ariatur.
                 </p>
@@ -1193,7 +1280,7 @@ export default function Home() {
                       </a>
                       <a
                         href="#"
-                        className ="group flex items-center rounded-xl disabled:border *:select-none [&>*:not(.sr-only)]:relative *:disabled:opacity-20 disabled:text-gray-950 disabled:border-gray-200 disabled:bg-gray-100 dark:disabled:border-gray-800/50 disabled:dark:bg-gray-900 dark:*:disabled:!text-white text-gray-950 bg-gray-100 hover:bg-gray-200/75 active:bg-gray-100 dark:text-white dark:bg-gray-500/10 dark:hover:bg-gray-500/15 dark:active:bg-gray-500/10 size-8 justify-center"
+                        className="group flex items-center rounded-xl disabled:border *:select-none [&>*:not(.sr-only)]:relative *:disabled:opacity-20 disabled:text-gray-950 disabled:border-gray-200 disabled:bg-gray-100 dark:disabled:border-gray-800/50 disabled:dark:bg-gray-900 dark:*:disabled:!text-white text-gray-950 bg-gray-100 hover:bg-gray-200/75 active:bg-gray-100 dark:text-white dark:bg-gray-500/10 dark:hover:bg-gray-500/15 dark:active:bg-gray-500/10 size-8 justify-center"
                       >
                         <span className="sr-only">Source Code</span>
                         <svg

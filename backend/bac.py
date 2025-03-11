@@ -30,13 +30,14 @@ def test_broken_access_control(base_url):
     socketio.emit("update", {"message": f"Testing access control on base URL: {base_url}"})
     print(f"Testing access control on base URL: {base_url}")  # Console log
 
-    results = {"accessible_endpoints": [], "blocked_endpoints": []}
+    results = {"accessible_endpoints": []}
+    count = 0
 
     for endpoint in endpoints:
         full_url = f"{base_url.rstrip('/')}{endpoint}"
-        
-        # Emit message that a specific endpoint is being tested
-        testing_message = f"Testing endpoint: {full_url}"
+
+        # Log that we are testing this endpoint
+        testing_message = f"Trying endpoint: {full_url}"
         print(testing_message)  # Console log
         socketio.emit("update", {"message": testing_message})
 
@@ -45,19 +46,21 @@ def test_broken_access_control(base_url):
 
             if response.status_code == 200:
                 results["accessible_endpoints"].append(endpoint)
-                # update_message = f"Potential Broken Access Control detected: {full_url} is accessible."
-                print(update_message)  # Console log
-                socketio.emit("update", {"message": update_message})
-            else:
-                results["blocked_endpoints"].append(endpoint)
-                update_message = f"{full_url} is blocked with status code {response.status_code}."
-                print(update_message)  # Console log
-                socketio.emit("update", {"message": update_message})
+                success_message = f"✅ Access granted: {full_url} (Possible Broken Access Control)"
+                print(success_message)  # Console log
+                count += 1
+                socketio.emit("update", {"message": success_message})
+
         except Exception as e:
             error_message = f"Error accessing {full_url}: {str(e)}"
             print(error_message)  # Console log
             socketio.emit("update", {"message": error_message})
 
+    if count == 0:
+        no_success_message = "❌ No accessible endpoints found."
+        print(no_success_message)
+        socketio.emit("update", {"message": no_success_message})
+        return {"success": False, "message": no_success_message}
     return {"success": True, "message": "Broken Access Control testing completed.", "results": results}
 
 # Flask API Endpoint

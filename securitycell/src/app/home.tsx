@@ -164,12 +164,14 @@ export default function Home() {
     await startBruteForce();
     console.log("Test Broken Access Control About to start");
     await brokenAccessControl();
+    console.log("Test Broken Access Control Ended");
     console.log("Test CORS About to start");
     await cors();
     console.log("Test SSL About to start");
     await testssl();
     console.log("Test SSRF About to start");
     await testssrf();
+    console.log("Test SSRF Ended");
     console.log("Test Security Misconfiguration About to start");
     await testSecurityMisconfiguration();
     console.log("Test vulnerable components About to start");
@@ -202,7 +204,6 @@ export default function Home() {
     console.log("Https Mixed Content Scanner About to start");
     await testhttpsmixed();
     console.log("Https Mixed Content Scanner Ended");
-
   };
 
   const links = [
@@ -356,6 +357,8 @@ export default function Home() {
   const [result, setResult] = useState("");
   const [detectedPayloads, setDetectedPayloads] = useState<string[]>([]);
   const [updates, setUpdates] = useState<string[]>([]);
+  const [bacResults, setBacResults] = useState<string[]>([]);
+
 
   useEffect(() => {
     // Connect to sockets on both ports
@@ -415,13 +418,20 @@ export default function Home() {
       console.log(`Port 5003: ${data.message}`); // Log to console
     });
 
+    
+    
     // Listen for updates on port 5004
     socket5004.on("update", (data) => {
       setUpdates((prevUpdates) => [
         ...prevUpdates,
-        `BRUTE ACCESS CONTROL: ${data.message}`, // Prefix to indicate source
+        `BRUTE ACCESS CONTROL: ${data.message}`,
       ]);
+      
       console.log(`Port 5004: ${data.message}`); // Log to console
+      // Store only successful results
+      if (data.message.includes("✅ Access granted")) {
+        setBacResults((prevResults) => [...prevResults, data.message]);
+      }
     });
 
     // Listen for updates on port 5005
@@ -571,7 +581,6 @@ export default function Home() {
       socket5016.disconnect();
       socket5017.disconnect();
       socket5018.disconnect();
-
     };
   }, []);
 
